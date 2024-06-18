@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger pipeline on push to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 -t param9064/wisecow:latest . --push
+
+      - name: Set up kubectl
+        uses: Azure/setup-kubectl@v1
+        with:
+          version: 'v1.18.0'
+
+      - name: Deploy TLS certificates as Kubernetes secret
+        run: |
+          kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Deploy to Kubernetes
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
