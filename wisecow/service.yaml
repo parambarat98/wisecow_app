@@ -11,4 +11,4 @@ spec:
   ports:
     - protocol: TCP
       port: 443
-      targetPort: 443  # Ensure this matches the containerPort in deployment.yaml
+      targetPort: 443  # Ensure this matches containerPort in deployment.yaml

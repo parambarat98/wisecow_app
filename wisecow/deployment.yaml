@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: wisecow
-          image: param9064/wisecow:latest
+          image: param9064/wisecow:latest  # Replace with your Docker image name
           ports:
-            - containerPort: 443  # Update to use HTTPS port
+            - containerPort: 443  # HTTPS port
           volumeMounts:
             - name: tls-certs
               mountPath: "/etc/tls"
@@ -26,4 +26,4 @@ spec:
       volumes:
         - name: tls-certs
           secret:
-            secretName: tls-certs
+            secretName: tls-certs  # Replace with your chosen TLS secret name
