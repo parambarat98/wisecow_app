@@ -18,6 +18,7 @@ jobs:
       - name: change directory
         run: | 
           cd wisecow/
+          echo $(pwd)
       - name: Build and push Docker image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
