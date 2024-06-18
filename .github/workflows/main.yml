@@ -21,7 +21,9 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t param9064/wisecow:latest . --push
+           docker build -t wisecow:latest .
+           docker tag wisecow:latest param9064/wisecow:latest
+           docker push param9064/wisecow:latest
 
       - name: Set up kubectl
         uses: Azure/setup-kubectl@v1
