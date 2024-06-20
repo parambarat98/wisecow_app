@@ -34,9 +34,9 @@ jobs:
         with:
           version: 'v1.18.0'
 
-      - name: Deploy TLS certificates as Kubernetes secret
-        run: |
-          kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
+      # - name: Deploy TLS certificates as Kubernetes secret
+      #   run: |
+      #     kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy to Kubernetes
         env:
