@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - https://verbose-funicular-wr7vwvjxq7qpf94qw-4499.app.github.dev/
+    - your-domain.com
     secretName: wisecow-tls
   rules:
-  - host: https://verbose-funicular-wr7vwvjxq7qpf94qw-4499.app.github.dev/
+  - host: your-domain.com
     http:
       paths:
       - path: /
