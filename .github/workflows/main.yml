@@ -72,17 +72,15 @@ jobs:
         run: |
           gcloud container clusters get-credentials wisecow-cluster --zone us-central1-c
     
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-         version: 'latest'
+      # - name: Set up kubectl
+      #   uses: azure/setup-kubectl@v1
+      #   with:
+      #    version: 'latest'
 
       - name: Decode kubeconfig
         run: echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
         
       - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f cluster-issuer.yaml
+        run: |   
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
-          kubectl apply -f ingress.yaml
