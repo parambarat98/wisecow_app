@@ -42,6 +42,21 @@ jobs:
         run: |
           mkdir -p $HOME/.kube
 
+      - name: Install Google Cloud SDK
+        run: |
+         curl -sSL https://sdk.cloud.google.com | bash
+         exec -l $SHELL
+         gcloud auth activate-service-account --key-file ${{ secrets.GCP_SA_KEY }}
+         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Enable Kubernetes Engine API
+        run: |
+          gcloud services enable container.googleapis.com
+
+      - name: Get Cluster Credentials
+        run: |
+          gcloud container clusters get-credentials wisecow-cluster --zone us-central1-c
+
       # - name: Deploy TLS certificates as Kubernetes secret
       #   run: |
       #     kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
