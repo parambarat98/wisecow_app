@@ -29,14 +29,30 @@ jobs:
            docker tag wisecow:latest param9064/wisecow:latest
            docker push param9064/wisecow:latest
 
+      # - name: Set up kubectl
+      #   uses: Azure/setup-kubectl@v1
+      #   with:
+      #     version: 'v1.18.0'
       - name: Set up kubectl
-        uses: Azure/setup-kubectl@v1
+        uses: azure/setup-kubectl@v1
         with:
-          version: 'v1.18.0'
+            version: 'latest'
+
+      - name: Create .kube directory
+        run: |
+          mkdir -p $HOME/.kube
 
       # - name: Deploy TLS certificates as Kubernetes secret
       #   run: |
       #     kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
+      # - name: Decode and write kubeconfig
+      #   run: |
+      #     echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
+
+      # - name: Deploy to Kubernetes
+      #   run: |
+      #     kubectl apply -f wisecow-deployment.yaml
+      #     kubectl apply -f wisecow-service.yaml
 
       - name: Deploy to Kubernetes
         env:
