@@ -90,7 +90,11 @@ jobs:
       #   run: |
       #     kubectl apply -f wisecow-deployment.yaml
       #     kubectl apply -f wisecow-service.yaml
-
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'  # Install the latest version of kubectl
+          install-location: '/usr/local/bin/kubectl'
       - name: Deploy to Kubernetes
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
