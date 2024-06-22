@@ -71,14 +71,6 @@ jobs:
       - name: Get Cluster Credentials
         run: |
           gcloud container clusters get-credentials wisecow-cluster --zone us-central1-c
-
-      # - name: Deploy TLS certificates as Kubernetes secret
-      #   run: |
-      #     kubectl create secret generic tls-certs --from-file=tls.crt --from-file=tls.key --dry-run=client -o yaml | kubectl apply -f -
-      # - name: Decode and write kubeconfig
-      #   run: |
-      #     echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
-
     
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
