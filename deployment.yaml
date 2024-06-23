@@ -1,11 +1,40 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: wisecow-deployment
+#   labels:
+#     app: wisecow
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: wisecow
+#   template:
+#     metadata:
+#       labels:
+#         app: wisecow
+#     spec:
+#       containers:
+#         - name: wisecow
+#           image: param9064/wisecow:latest  # Replace with your Docker image name
+#           ports:
+#             - containerPort: 443  # HTTPS port
+#           volumeMounts:
+#             - name: tls-certs
+#               mountPath: "/etc/tls"
+#               readOnly: true
+#       volumes:
+#         - name: tls-certs
+#           secret:
+#             secretName: tls-certs  # Replace with your chosen TLS secret name
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wisecow-deployment
-  labels:
-    app: wisecow
+  name: wisecow
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: wisecow
@@ -15,15 +44,7 @@ spec:
         app: wisecow
     spec:
       containers:
-        - name: wisecow
-          image: param9064/wisecow:latest  # Replace with your Docker image name
-          ports:
-            - containerPort: 443  # HTTPS port
-          volumeMounts:
-            - name: tls-certs
-              mountPath: "/etc/tls"
-              readOnly: true
-      volumes:
-        - name: tls-certs
-          secret:
-            secretName: tls-certs  # Replace with your chosen TLS secret name
+      - name: wisecow
+        image: param9064/wisecow:latest
+        ports:
+        - containerPort: 443
