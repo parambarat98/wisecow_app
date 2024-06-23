@@ -70,7 +70,7 @@ jobs:
 
       - name: Get Cluster Credentials
         run: |
-          gcloud container clusters get-credentials wisecow-cluster --zone us-central1-c
+          gcloud container clusters get-credentials wisecow-cluster --region us-central1 -c
     
       # - name: Set up kubectl
       #   uses: azure/setup-kubectl@v1
