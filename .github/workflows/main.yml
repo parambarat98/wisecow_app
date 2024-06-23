@@ -85,5 +85,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |   
           minikube start
+          nginx --image=nginx
+          kubectl create deployment wisecow
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
